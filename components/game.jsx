@@ -6,7 +6,7 @@ import Bird from "./bird"
 import Obstacle from "./obstacle"
 import Section from "./section"
 import { useKeyPress } from "@/hooks/use-key-press"
-import { useMobile } from "@/hooks/use-mobile"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { useSound } from "@/hooks/use-sound"
 
 export default function Game({ isPaused, onSectionClick }) {
@@ -39,7 +39,7 @@ export default function Game({ isPaused, onSectionClick }) {
     { id: "contact", title: "Contact", x: 4000, y: 180, icon: "📧" },
   ])
 
-  const isMobile = useMobile()
+  const isMobile = useIsMobile()
   const isJumpKeyPressed = useKeyPress(" ")
   const sound = useSound()
 
