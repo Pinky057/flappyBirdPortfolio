@@ -7,10 +7,8 @@ export default function Modal({ section, onClose }) {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    // Animation timing
     setIsVisible(true)
 
-    // Add event listener for escape key
     const handleEscape = (e) => {
       if (e.key === "Escape") {
         handleClose()
@@ -18,18 +16,14 @@ export default function Modal({ section, onClose }) {
     }
 
     window.addEventListener("keydown", handleEscape)
-
-    return () => {
-      window.removeEventListener("keydown", handleEscape)
-    }
+    return () => window.removeEventListener("keydown", handleEscape)
   }, [])
 
   const handleClose = () => {
     setIsVisible(false)
-    setTimeout(onClose, 300) // Wait for animation to complete
+    setTimeout(onClose, 200)
   }
 
-  // Content based on section
   const renderContent = () => {
     switch (section) {
       case "about":
@@ -38,6 +32,8 @@ export default function Modal({ section, onClose }) {
         return <ExperienceContent />
       case "projects":
         return <ProjectsContent />
+      case "youtube":
+        return <YouTubeContent />
       case "contact":
         return <ContactContent />
       default:
@@ -47,61 +43,62 @@ export default function Modal({ section, onClose }) {
 
   return (
     <div
-      className="modal-overlay"
+      className="modal-overlay no-jump"
       style={{
         position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
         height: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         zIndex: 100,
         opacity: isVisible ? 1 : 0,
-        transition: "opacity 0.3s ease",
+        transition: "opacity 0.2s ease",
       }}
       onClick={handleClose}
     >
       <div
         className="modal-content"
         style={{
-          backgroundColor: "#fff",
-          borderRadius: "10px",
+          backgroundColor: "#DEB887",
+          border: "8px solid #8B4513",
           width: "90%",
-          maxWidth: "800px",
-          maxHeight: "80vh",
+          maxWidth: "750px",
+          maxHeight: "85vh",
           overflow: "auto",
-          padding: "30px",
+          padding: "24px",
           position: "relative",
           transform: isVisible ? "scale(1)" : "scale(0.9)",
-          transition: "transform 0.3s ease",
-          boxShadow: "0 5px 30px rgba(0, 0, 0, 0.5)",
+          transition: "transform 0.2s ease",
+          boxShadow: "0 8px 0 #5D4E37, 0 16px 32px rgba(0,0,0,0.5)",
+          imageRendering: "pixelated",
         }}
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Close button */}
         <button
-          className="close-button"
+          className="no-jump"
           onClick={handleClose}
           style={{
             position: "absolute",
-            top: "15px",
-            right: "15px",
-            background: "none",
-            border: "none",
-            fontSize: "24px",
+            top: "12px",
+            right: "12px",
+            background: "#E74C3C",
+            border: "4px solid #8B0000",
+            borderBottom: "6px solid #5C0000",
+            width: "40px",
+            height: "40px",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            backgroundColor: "#f1f1f1",
+            color: "white",
           }}
         >
-          <X size={24} />
+          <X size={20} strokeWidth={3} />
         </button>
 
         {renderContent()}
@@ -110,53 +107,127 @@ export default function Modal({ section, onClose }) {
   )
 }
 
-// Section content components
-function AboutContent() {
+// Retro styled heading component
+function RetroHeading({ children, color = "#543E14" }) {
   return (
-    <div className="section-content">
-      <h2 style={{ color: "#2D4B73", marginBottom: "20px", fontSize: "28px" }}>About Me</h2>
-      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-        <div style={{ flex: "1 1 300px" }}>
-          <img
-            src="/placeholder.svg?height=300&width=300"
-            alt="Profile"
-            style={{
-              width: "100%",
-              maxWidth: "300px",
-              borderRadius: "10px",
-              border: "5px solid #5ECCE1",
-            }}
-          />
+    <h2
+      style={{
+        fontFamily: "'Press Start 2P', monospace",
+        fontSize: "16px",
+        color: color,
+        marginBottom: "20px",
+        textShadow: "2px 2px 0 #FFF",
+        lineHeight: 1.6,
+      }}
+    >
+      {children}
+    </h2>
+  )
+}
+
+// Retro skill badge
+function SkillBadge({ skill, color = "#73BF2E" }) {
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        padding: "6px 10px",
+        backgroundColor: color,
+        color: "white",
+        fontFamily: "'Press Start 2P', monospace",
+        fontSize: "7px",
+        border: "3px solid #2E5A1C",
+        boxShadow: "0 3px 0 #2E5A1C",
+        margin: "3px",
+      }}
+    >
+      {skill}
+    </span>
+  )
+}
+
+function AboutContent() {
+  const languages = ["JavaScript", "TypeScript", "Python", "HTML", "CSS", "SASS"]
+  const frameworks = ["React", "Next.js", "React Native", "Django", "Node.js", "Tailwind CSS"]
+  const tools = ["VS Code", "Cursor", "Git", "GitHub", "Figma", "Vercel", "Claude Code"]
+  const databases = ["PostgreSQL", "MySQL", "MongoDB", "Firebase"]
+
+  return (
+    <div style={{ fontFamily: "'Press Start 2P', monospace" }}>
+      <RetroHeading>👤 ABOUT ME</RetroHeading>
+
+      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginBottom: "20px" }}>
+        <div
+          style={{
+            width: "100px",
+            height: "100px",
+            backgroundColor: "#4EC0CA",
+            border: "4px solid #2A7A8A",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "40px",
+            flexShrink: 0,
+          }}
+        >
+          👩‍💻
         </div>
-        <div style={{ flex: "2 1 400px" }}>
-          <p style={{ marginBottom: "15px", lineHeight: "1.6" }}>
-            Hello! I'm a passionate web developer with expertise in building interactive, user-friendly applications. I
-            specialize in React, Next.js, and modern JavaScript.
+        <div style={{ flex: 1, minWidth: "200px" }}>
+          <p style={{ fontSize: "11px", color: "#543E14", lineHeight: 1.8, marginBottom: "8px" }}>
+            Hi! I'm <strong style={{ color: "#E74C3C" }}>Ummey Habiba Pinky</strong>
           </p>
-          <p style={{ marginBottom: "15px", lineHeight: "1.6" }}>
-            My journey in web development started 5 years ago, and I've been in love with creating digital experiences
-            ever since. I enjoy solving complex problems and turning ideas into reality through code.
+          <p style={{ fontSize: "8px", color: "#666", lineHeight: 2 }}>
+            🎓 CS Graduate from East West University, Bangladesh
           </p>
-          <h3 style={{ color: "#2D4B73", margin: "20px 0 10px", fontSize: "22px" }}>Skills</h3>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-            {["React", "Next.js", "TypeScript", "JavaScript", "HTML/CSS", "Node.js", "GraphQL", "UI/UX Design"].map(
-              (skill) => (
-                <span
-                  key={skill}
-                  style={{
-                    padding: "8px 15px",
-                    backgroundColor: "#5ECCE1",
-                    color: "white",
-                    borderRadius: "20px",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {skill}
-                </span>
-              ),
-            )}
-          </div>
+          <p style={{ fontSize: "8px", color: "#666", lineHeight: 2 }}>
+            💻 Passionate about building web & mobile apps
+          </p>
+          <p style={{ fontSize: "8px", color: "#666", lineHeight: 2 }}>
+            🎬 Developer content creator on YouTube
+          </p>
+          <p style={{ fontSize: "8px", color: "#666", lineHeight: 2 }}>
+            🤖 Currently exploring AI-assisted development with Claude Code, Cursor & more
+          </p>
+        </div>
+      </div>
+
+      <div style={{ marginBottom: "16px" }}>
+        <h3 style={{ fontSize: "10px", color: "#8B4513", marginBottom: "10px" }}>
+          🎯 CURRENTLY WORKING ON
+        </h3>
+        <ul style={{ fontSize: "8px", color: "#543E14", lineHeight: 2.2, paddingLeft: "16px" }}>
+          <li>🚀 Building my own web apps & mobile apps</li>
+          <li>📹 Creating coding videos & tutorials</li>
+          <li>🌱 Learning & experimenting with new tech</li>
+          <li>💡 Open source contributions</li>
+        </ul>
+      </div>
+
+      <div style={{ marginBottom: "16px" }}>
+        <h3 style={{ fontSize: "10px", color: "#8B4513", marginBottom: "8px" }}>💻 LANGUAGES</h3>
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {languages.map((skill) => <SkillBadge key={skill} skill={skill} color="#4169E1" />)}
+        </div>
+      </div>
+
+      <div style={{ marginBottom: "16px" }}>
+        <h3 style={{ fontSize: "10px", color: "#8B4513", marginBottom: "8px" }}>⚡ FRAMEWORKS</h3>
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {frameworks.map((skill) => <SkillBadge key={skill} skill={skill} color="#73BF2E" />)}
+        </div>
+      </div>
+
+      <div style={{ marginBottom: "16px" }}>
+        <h3 style={{ fontSize: "10px", color: "#8B4513", marginBottom: "8px" }}>🛠️ TOOLS</h3>
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {tools.map((skill) => <SkillBadge key={skill} skill={skill} color="#FF6B6B" />)}
+        </div>
+      </div>
+
+      <div>
+        <h3 style={{ fontSize: "10px", color: "#8B4513", marginBottom: "8px" }}>🗄️ DATABASES</h3>
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {databases.map((skill) => <SkillBadge key={skill} skill={skill} color="#9B59B6" />)}
         </div>
       </div>
     </div>
@@ -166,48 +237,73 @@ function AboutContent() {
 function ExperienceContent() {
   const experiences = [
     {
-      title: "Senior Frontend Developer",
-      company: "Tech Innovations Inc.",
-      period: "Jan 2022 - Present",
-      description:
-        "Leading the frontend development team in building responsive and accessible web applications using React and Next.js. Implemented state management solutions and optimized performance.",
+      title: "Software Developer",
+      company: "Freelance & Personal Projects",
+      period: "2023 - Present",
+      description: "Building web applications using React, Next.js, and modern JavaScript. Working on AI-assisted development projects.",
+      icon: "💼",
     },
     {
-      title: "Web Developer",
-      company: "Digital Solutions Agency",
-      period: "Mar 2019 - Dec 2021",
-      description:
-        "Developed and maintained client websites and web applications. Collaborated with designers to implement pixel-perfect UI. Worked with various APIs and backend systems.",
+      title: "Content Creator",
+      company: "YouTube - @ishratpinky",
+      period: "2021 - Present",
+      description: "Creating developer tutorials, VS Code tips & themes, CSS tricks, and coding content. Growing dev community.",
+      icon: "🎬",
     },
     {
-      title: "Junior Developer",
-      company: "StartUp Labs",
-      period: "Jun 2017 - Feb 2019",
-      description:
-        "Assisted in the development of web applications. Learned and implemented best practices in frontend development. Participated in code reviews and team meetings.",
+      title: "Open Source Contributor",
+      company: "GitHub - Pinky057",
+      period: "Ongoing",
+      description: "Contributing to open source projects, building public repos, and sharing code with the community.",
+      icon: "🐙",
+    },
+    {
+      title: "CS Graduate",
+      company: "East West University",
+      period: "Completed",
+      description: "Bachelor's in Computer Science with focus on software development, algorithms, and web technologies.",
+      icon: "🎓",
     },
   ]
 
   return (
-    <div className="section-content">
-      <h2 style={{ color: "#2D4B73", marginBottom: "20px", fontSize: "28px" }}>Work Experience</h2>
-      <div style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
+    <div style={{ fontFamily: "'Press Start 2P', monospace" }}>
+      <RetroHeading color="#4169E1">💼 EXPERIENCE</RetroHeading>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
         {experiences.map((exp, index) => (
           <div
             key={index}
             style={{
-              padding: "20px",
-              borderRadius: "10px",
-              backgroundColor: "#f8f9fa",
-              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+              backgroundColor: "#F5DEB3",
+              border: "4px solid #8B4513",
+              padding: "14px",
+              boxShadow: "0 4px 0 #5D4E37",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", flexWrap: "wrap" }}>
-              <h3 style={{ color: "#2D4B73", fontSize: "22px", margin: 0 }}>{exp.title}</h3>
-              <span style={{ color: "#5ECCE1", fontWeight: "bold" }}>{exp.period}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px", flexWrap: "wrap" }}>
+              <span style={{ fontSize: "22px" }}>{exp.icon}</span>
+              <div style={{ flex: 1, minWidth: "150px" }}>
+                <h3 style={{ fontSize: "10px", color: "#543E14", marginBottom: "4px" }}>
+                  {exp.title}
+                </h3>
+                <p style={{ fontSize: "8px", color: "#73BF2E" }}>{exp.company}</p>
+              </div>
+              <span
+                style={{
+                  fontSize: "7px",
+                  color: "#8B4513",
+                  backgroundColor: "#DEB887",
+                  padding: "4px 8px",
+                  border: "2px solid #8B4513",
+                }}
+              >
+                {exp.period}
+              </span>
             </div>
-            <div style={{ color: "#FF7D2D", fontWeight: "bold", marginBottom: "10px" }}>{exp.company}</div>
-            <p style={{ margin: 0, lineHeight: "1.6" }}>{exp.description}</p>
+            <p style={{ fontSize: "7px", color: "#666", lineHeight: 2 }}>
+              {exp.description}
+            </p>
           </div>
         ))}
       </div>
@@ -218,97 +314,243 @@ function ExperienceContent() {
 function ProjectsContent() {
   const projects = [
     {
-      title: "E-commerce Platform",
-      image: "/placeholder.svg?height=200&width=300",
-      description: "A full-featured online store with product catalog, shopping cart, and payment processing.",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe API"],
-      link: "#",
+      title: "LinkedIn Clone",
+      description: "Full LinkedIn UI clone with feed & profiles",
+      tech: ["React", "Next.js", "Tailwind"],
+      link: "https://linedin-clone.vercel.app/",
+      icon: "💼",
     },
     {
-      title: "Task Management App",
-      image: "/placeholder.svg?height=200&width=300",
-      description: "A productivity application for managing tasks, projects, and team collaboration.",
-      technologies: ["Next.js", "TypeScript", "Firebase", "Tailwind CSS"],
-      link: "#",
+      title: "Hulu 2.0 Clone",
+      description: "Movie streaming UI with TMDB API",
+      tech: ["React", "Next.js", "TMDB API"],
+      link: "https://hulu-2-0-clone-beta.vercel.app/",
+      icon: "🎬",
     },
     {
-      title: "Weather Dashboard",
-      image: "/placeholder.svg?height=200&width=300",
-      description: "An interactive weather application showing forecasts and historical data.",
-      technologies: ["React", "Chart.js", "Weather API", "Styled Components"],
-      link: "#",
+      title: "CSS Buttons Collection",
+      description: "Beautiful hover effects & animations",
+      tech: ["HTML", "CSS", "Animations"],
+      link: "https://css-buttons-three.vercel.app/",
+      icon: "🎨",
+    },
+    {
+      title: "Quote Extension",
+      description: "Daily quotes Chrome extension",
+      tech: ["JavaScript", "Chrome API"],
+      link: "https://github.com/Pinky057/GetQuoetsEveryday-Extension",
+      icon: "🧩",
+    },
+    {
+      title: "Login Form UI",
+      description: "Material UI form with validation",
+      tech: ["React", "Material UI", "Formik"],
+      link: "https://login-form-material-ui.vercel.app/",
+      icon: "🔐",
+    },
+    {
+      title: "This Portfolio!",
+      description: "Flappy Bird game portfolio",
+      tech: ["Next.js", "React", "Canvas"],
+      link: "https://github.com/Pinky057/flappyBirdPortfolio",
+      icon: "🎮",
     },
   ]
 
   return (
-    <div className="section-content">
-      <h2 style={{ color: "#2D4B73", marginBottom: "20px", fontSize: "28px" }}>Projects</h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "20px" }}>
+    <div style={{ fontFamily: "'Press Start 2P', monospace" }}>
+      <RetroHeading color="#32CD32">🚀 PROJECTS</RetroHeading>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+          gap: "12px",
+        }}
+      >
         {projects.map((project, index) => (
-          <div
+          <a
             key={index}
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-              borderRadius: "10px",
-              overflow: "hidden",
-              boxShadow: "0 3px 15px rgba(0, 0, 0, 0.1)",
-              transition: "transform 0.3s ease",
-              cursor: "pointer",
+              display: "block",
+              backgroundColor: "#F5DEB3",
+              border: "4px solid #228B22",
+              padding: "12px",
+              textDecoration: "none",
+              boxShadow: "0 4px 0 #1A5A1A",
+              transition: "transform 0.1s, box-shadow 0.1s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-5px)"
+              e.currentTarget.style.transform = "translateY(-2px)"
+              e.currentTarget.style.boxShadow = "0 6px 0 #1A5A1A"
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)"
+              e.currentTarget.style.boxShadow = "0 4px 0 #1A5A1A"
             }}
           >
-            <img
-              src={project.image || "/placeholder.svg"}
-              alt={project.title}
-              style={{ width: "100%", height: "180px", objectFit: "cover" }}
-            />
-            <div style={{ padding: "15px" }}>
-              <h3 style={{ color: "#2D4B73", marginBottom: "10px", fontSize: "20px" }}>{project.title}</h3>
-              <p style={{ marginBottom: "15px", fontSize: "14px", lineHeight: "1.5" }}>{project.description}</p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "5px", marginBottom: "15px" }}>
-                {project.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    style={{
-                      padding: "4px 8px",
-                      backgroundColor: "#5ECCE1",
-                      color: "white",
-                      borderRadius: "4px",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <a
-                href={project.link}
+            <div style={{ fontSize: "28px", marginBottom: "6px" }}>{project.icon}</div>
+            <h3 style={{ fontSize: "9px", color: "#543E14", marginBottom: "4px" }}>
+              {project.title}
+            </h3>
+            <p style={{ fontSize: "6px", color: "#666", marginBottom: "8px", lineHeight: 1.8 }}>
+              {project.description}
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "3px" }}>
+              {project.tech.map((t) => (
+                <span
+                  key={t}
+                  style={{
+                    fontSize: "5px",
+                    backgroundColor: "#73BF2E",
+                    color: "white",
+                    padding: "2px 5px",
+                    border: "2px solid #2E5A1C",
+                  }}
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function YouTubeContent() {
+  const videos = [
+    {
+      title: "How to make VS Code transparent",
+      description: "Make your VS Code look glassy and aesthetic",
+      thumbnail: "https://i.ytimg.com/vi/7nOhaT_6mgE/maxresdefault.jpg",
+      link: "https://www.youtube.com/watch?v=7nOhaT_6mgE",
+      views: "Popular",
+    },
+    {
+      title: "Top 10 VS Code Themes",
+      description: "Coolest themes you need to try",
+      thumbnail: "https://i.ytimg.com/vi/Gnkwj8cIbGk/maxresdefault.jpg",
+      link: "https://www.youtube.com/watch?v=Gnkwj8cIbGk",
+      views: "Must Watch",
+    },
+    {
+      title: "CSS Buttons Hover Effects",
+      description: "Beautiful button animations tutorial",
+      thumbnail: "https://i.ytimg.com/vi/PxCnjA92EN8/maxresdefault.jpg",
+      link: "https://www.youtube.com/watch?v=PxCnjA92EN8",
+      views: "Tutorial",
+    },
+    {
+      title: "CSS Background Blend Mode",
+      description: "Creative CSS visual effects",
+      thumbnail: "https://i.ytimg.com/vi/aCkOKtTuZQg/maxresdefault.jpg",
+      link: "https://www.youtube.com/watch?v=aCkOKtTuZQg",
+      views: "CSS Tips",
+    },
+    {
+      title: "Chrome Extension Tutorial",
+      description: "Build your first Chrome extension",
+      thumbnail: "https://i.ytimg.com/vi/mLAb6_LZmYU/maxresdefault.jpg",
+      link: "https://youtu.be/mLAb6_LZmYU",
+      views: "Tutorial",
+    },
+  ]
+
+  return (
+    <div style={{ fontFamily: "'Press Start 2P', monospace" }}>
+      <RetroHeading color="#FF0000">📺 YOUTUBE</RetroHeading>
+
+      <div style={{ marginBottom: "16px", textAlign: "center" }}>
+        <a
+          href="https://www.youtube.com/channel/UC6K4SX8PCmBKrj6-G4PRLYQ"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-block",
+            padding: "12px 24px",
+            backgroundColor: "#FF0000",
+            color: "white",
+            textDecoration: "none",
+            fontSize: "10px",
+            border: "4px solid #990000",
+            boxShadow: "0 4px 0 #660000",
+          }}
+        >
+          🔔 SUBSCRIBE TO MY CHANNEL
+        </a>
+      </div>
+
+      <p style={{ fontSize: "8px", color: "#543E14", lineHeight: 2, marginBottom: "16px", textAlign: "center" }}>
+        I create dev tutorials, VS Code tips, CSS tricks & coding content!
+      </p>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        {videos.map((video, index) => (
+          <a
+            key={index}
+            href={video.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "flex",
+              gap: "12px",
+              backgroundColor: "#F5DEB3",
+              border: "4px solid #8B4513",
+              padding: "10px",
+              textDecoration: "none",
+              boxShadow: "0 4px 0 #5D4E37",
+              alignItems: "center",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "#EED9A4"
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "#F5DEB3"
+            }}
+          >
+            <div
+              style={{
+                width: "120px",
+                height: "68px",
+                backgroundColor: "#333",
+                flexShrink: 0,
+                overflow: "hidden",
+                border: "2px solid #8B4513",
+              }}
+            >
+              <img
+                src={video.thumbnail}
+                alt={video.title}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </div>
+            <div style={{ flex: 1 }}>
+              <span
                 style={{
-                  display: "inline-block",
-                  padding: "8px 15px",
-                  backgroundColor: "#FF7D2D",
+                  fontSize: "6px",
+                  backgroundColor: "#FF0000",
                   color: "white",
-                  textDecoration: "none",
-                  borderRadius: "5px",
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  transition: "background-color 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#D45E00"
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#FF7D2D"
+                  padding: "2px 6px",
+                  marginBottom: "4px",
+                  display: "inline-block",
                 }}
               >
-                View Project
-              </a>
+                {video.views}
+              </span>
+              <h3 style={{ fontSize: "8px", color: "#543E14", marginBottom: "4px", lineHeight: 1.5 }}>
+                {video.title}
+              </h3>
+              <p style={{ fontSize: "6px", color: "#666", lineHeight: 1.6 }}>
+                {video.description}
+              </p>
             </div>
-          </div>
+            <div style={{ fontSize: "20px" }}>▶️</div>
+          </a>
         ))}
       </div>
     </div>
@@ -316,137 +558,109 @@ function ProjectsContent() {
 }
 
 function ContactContent() {
+  const socialLinks = [
+    { name: "GitHub", url: "https://github.com/Pinky057", icon: "🐙" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/ishrat-pinky-jahan/", icon: "💼" },
+    { name: "YouTube", url: "https://www.youtube.com/channel/UC6K4SX8PCmBKrj6-G4PRLYQ", icon: "📺" },
+    { name: "DEV.to", url: "https://dev.to/pinky057", icon: "📝" },
+    { name: "Instagram", url: "https://www.instagram.com/ishrat.designs/", icon: "📸" },
+    { name: "Behance", url: "https://www.behance.net/ishratjahapinky", icon: "🎨" },
+    { name: "CodePen", url: "https://codepen.io/Ishrat_Pinky", icon: "✏️" },
+    { name: "CSS Battle", url: "https://cssbattle.dev/player/ishratpinky", icon: "⚔️" },
+  ]
+
   return (
-    <div className="section-content">
-      <h2 style={{ color: "#E74C3C", marginBottom: "20px", fontSize: "28px" }}>Contact Me</h2>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "30px" }}>
-        <div style={{ flex: "1 1 300px" }}>
-          <p style={{ marginBottom: "20px", lineHeight: "1.6" }}>
-            I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel
-            free to reach out using the form or through my social media profiles.
-          </p>
+    <div style={{ fontFamily: "'Press Start 2P', monospace" }}>
+      <RetroHeading color="#FF6B6B">📧 CONTACT ME</RetroHeading>
 
-          <div style={{ marginBottom: "20px" }}>
-            <h3 style={{ color: "#E74C3C", marginBottom: "10px", fontSize: "18px" }}>Email</h3>
-            <a href="mailto:contact@example.com" style={{ color: "#5ECCE1", textDecoration: "none" }}>
-              contact@example.com
-            </a>
-          </div>
+      <p style={{ fontSize: "8px", color: "#543E14", lineHeight: 2, marginBottom: "20px" }}>
+        I'm always open to discussing new projects, creative ideas, collaborations or opportunities!
+      </p>
 
-          <div style={{ marginBottom: "20px" }}>
-            <h3 style={{ color: "#E74C3C", marginBottom: "10px", fontSize: "18px" }}>Location</h3>
-            <p style={{ margin: 0 }}>San Francisco, CA</p>
-          </div>
+      <div style={{ marginBottom: "20px" }}>
+        <h3 style={{ fontSize: "10px", color: "#8B4513", marginBottom: "10px" }}>
+          📬 EMAIL ME
+        </h3>
+        <a
+          href="mailto:ishratjahanpinky2@gmail.com"
+          style={{
+            display: "inline-block",
+            fontSize: "8px",
+            color: "#4169E1",
+            textDecoration: "none",
+            backgroundColor: "#F5DEB3",
+            padding: "10px 16px",
+            border: "3px solid #8B4513",
+            boxShadow: "0 3px 0 #5D4E37",
+          }}
+        >
+          ishratjahanpinky2@gmail.com
+        </a>
+      </div>
 
-          <div style={{ display: "flex", gap: "15px", marginTop: "30px" }}>
-            {["GitHub", "LinkedIn", "Twitter"].map((platform) => (
-              <a
-                key={platform}
-                href="#"
-                style={{
-                  display: "inline-block",
-                  padding: "10px 15px",
-                  backgroundColor: "#E74C3C",
-                  color: "white",
-                  textDecoration: "none",
-                  borderRadius: "5px",
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  transition: "background-color 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#C0392B"
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#E74C3C"
-                }}
-              >
-                {platform}
-              </a>
-            ))}
-          </div>
-        </div>
+      <div style={{ marginBottom: "20px" }}>
+        <h3 style={{ fontSize: "10px", color: "#8B4513", marginBottom: "10px" }}>
+          📍 LOCATION
+        </h3>
+        <p style={{ fontSize: "8px", color: "#543E14" }}>
+          🇧🇩 Bangladesh
+        </p>
+      </div>
 
-        <div style={{ flex: "1 1 300px" }}>
-          <form style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-            <div>
-              <label htmlFor="name" style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  borderRadius: "5px",
-                  border: "1px solid #ddd",
-                  fontSize: "16px",
-                }}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="email" style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  borderRadius: "5px",
-                  border: "1px solid #ddd",
-                  fontSize: "16px",
-                }}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
-                Message
-              </label>
-              <textarea
-                id="message"
-                rows={5}
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  borderRadius: "5px",
-                  border: "1px solid #ddd",
-                  fontSize: "16px",
-                  resize: "vertical",
-                }}
-              />
-            </div>
-
-            <button
-              type="submit"
+      <div>
+        <h3 style={{ fontSize: "10px", color: "#8B4513", marginBottom: "10px" }}>
+          🔗 FIND ME EVERYWHERE
+        </h3>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {socialLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
-                padding: "12px",
-                backgroundColor: "#E74C3C",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "8px 12px",
+                backgroundColor: "#FF6B6B",
                 color: "white",
-                border: "none",
-                borderRadius: "5px",
-                fontSize: "16px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                transition: "background-color 0.2s ease",
+                textDecoration: "none",
+                border: "3px solid #8B0000",
+                boxShadow: "0 3px 0 #5C0000",
+                fontSize: "7px",
+                transition: "transform 0.1s",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#C0392B"
+                e.currentTarget.style.transform = "translateY(-2px)"
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#E74C3C"
+                e.currentTarget.style.transform = "translateY(0)"
               }}
             >
-              Send Message
-            </button>
-          </form>
+              <span style={{ fontSize: "14px" }}>{link.icon}</span>
+              {link.name}
+            </a>
+          ))}
         </div>
+      </div>
+
+      <div
+        style={{
+          marginTop: "24px",
+          padding: "16px",
+          backgroundColor: "#F5DEB3",
+          border: "4px dashed #8B4513",
+          textAlign: "center",
+        }}
+      >
+        <p style={{ fontSize: "10px", color: "#543E14", marginBottom: "8px" }}>
+          🎮 THANKS FOR PLAYING!
+        </p>
+        <p style={{ fontSize: "7px", color: "#666" }}>
+          Made with ❤️ by Pinky using Next.js & Claude Code
+        </p>
       </div>
     </div>
   )
 }
-

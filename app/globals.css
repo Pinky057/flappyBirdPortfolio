@@ -2,10 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Press Start 2P for retro pixel style */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  /* Retro color palette */
+  --sky-blue: #4EC0CA;
+  --pipe-green: #73BF2E;
+  --pipe-dark: #558B2F;
+  --ground-green: #5D8C51;
+  --ground-dirt: #DEB887;
+  --bird-yellow: #F8E81C;
+  --bird-orange: #FF6B35;
+  --ui-brown: #8B4513;
+  --ui-cream: #DEB887;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: 'Press Start 2P', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   overflow: hidden;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .game-container {
@@ -15,70 +33,127 @@ body {
   position: relative;
 }
 
-@keyframes cloud-move {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-1000px);
-  }
+/* Retro pixel font class */
+.pixel-font {
+  font-family: 'Press Start 2P', monospace;
+  image-rendering: pixelated;
 }
 
-/* Make clouds move extremely slowly */
-.cloud {
-  animation: cloud-move 240s linear infinite !important; /* Doubled from 120s to 240s */
+/* Retro button styles */
+.retro-button {
+  font-family: 'Press Start 2P', monospace;
+  background-color: var(--pipe-green);
+  color: white;
+  border: 4px solid var(--pipe-dark);
+  border-bottom: 8px solid #2E5A1C;
+  padding: 12px 24px;
+  cursor: pointer;
+  text-shadow: 2px 2px 0 #2E5A1C;
+  transition: all 0.1s ease;
+  image-rendering: pixelated;
 }
 
-/* Character floating animation */
+.retro-button:hover {
+  filter: brightness(1.1);
+}
+
+.retro-button:active {
+  transform: translateY(4px);
+  border-bottom-width: 4px;
+}
+
+/* Retro panel styles */
+.retro-panel {
+  background-color: var(--ui-cream);
+  border: 8px solid var(--ui-brown);
+  box-shadow: 0 8px 0 #5D4E37;
+  image-rendering: pixelated;
+}
+
+/* Animations */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
 @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
-/* Update nav button styling to match the reference */
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Cloud animation - very slow */
+@keyframes cloud-move {
+  from { transform: translateX(0); }
+  to { transform: translateX(-1000px); }
+}
+
+.cloud {
+  animation: cloud-move 240s linear infinite;
+}
+
+/* Blink animation class */
+.blink {
+  animation: blink 1s infinite;
+}
+
+/* Float animation class */
+.float {
+  animation: float 2s ease-in-out infinite;
+}
+
+/* Pixelated rendering for game elements */
+.pixelated {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Nav button styling */
 .nav-button {
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  font-family: 'Press Start 2P', monospace;
 }
 
 .nav-button:hover {
   transform: translateY(-3px);
-  color: #2d4b73;
-}
-
-.nav-button::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #2d4b73;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-.nav-button:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
+  filter: brightness(1.1);
 }
 
 .nav-button.active {
-  color: #2d4b73;
+  background-color: var(--pipe-green);
 }
 
-.nav-button.active::after {
-  transform: scaleX(1);
-  background-color: #2d4b73;
+/* Scrollbar styling for modals */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ui-cream);
+  border: 2px solid var(--ui-brown);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ui-brown);
+  border: 2px solid var(--ui-cream);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6B3A0A;
 }
 
 @layer utilities {
@@ -114,14 +189,6 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -143,19 +210,6 @@ body {
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -170,4 +224,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-

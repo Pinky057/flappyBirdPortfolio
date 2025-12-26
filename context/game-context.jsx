@@ -5,15 +5,16 @@ import { createContext, useContext, useState } from "react"
 const GameContext = createContext(undefined)
 
 export function GameProvider({ children }) {
-  const [birdPosition, setBirdPosition] = useState({ x: 150, y: 200 })
-  const [gameSpeed, setGameSpeed] = useState(2) // Reduced from 3 to 2
+  const [birdPosition, setBirdPosition] = useState({ x: 150, y: 250 })
+  const [velocity, setVelocity] = useState(0)
+  const [gameSpeed, setGameSpeed] = useState(3)
   const [gameOver, setGameOver] = useState(false)
   const [score, setScore] = useState(0)
 
-  // Update the restart function in the context to be more comprehensive
   const restart = () => {
-    setBirdPosition({ x: 150, y: 200 })
-    setGameSpeed(2)
+    setBirdPosition({ x: 150, y: 250 })
+    setVelocity(0)
+    setGameSpeed(3)
     setGameOver(false)
     setScore(0)
   }
@@ -23,6 +24,8 @@ export function GameProvider({ children }) {
       value={{
         birdPosition,
         setBirdPosition,
+        velocity,
+        setVelocity,
         gameSpeed,
         setGameSpeed,
         gameOver,
@@ -44,4 +47,3 @@ export function useGameContext() {
   }
   return context
 }
-
