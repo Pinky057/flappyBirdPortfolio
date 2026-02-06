@@ -314,6 +314,13 @@ function ExperienceContent() {
 function ProjectsContent() {
   const projects = [
     {
+      title: "Meridian Travel",
+      description: "High-fidelity travel booking with dynamic pricing & maps",
+      tech: ["Next.js", "Tailwind", "Leaflet"],
+      link: "https://meridian-travel-69ym.vercel.app/",
+      icon: "🌍",
+    },
+    {
       title: "LinkedIn Clone",
       description: "Full LinkedIn UI clone with feed & profiles",
       tech: ["React", "Next.js", "Tailwind"],
