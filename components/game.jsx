@@ -5,6 +5,7 @@ import { useGameContext } from "@/context/game-context"
 import Bird from "./bird"
 import Obstacle from "./obstacle"
 import Section from "./section"
+import Particle from "./particle"
 import { useKeyPress } from "@/hooks/use-key-press"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useSound } from "@/hooks/use-sound"
@@ -26,10 +27,15 @@ export default function Game({ isPaused, onSectionClick }) {
   } = useGameContext()
 
   const [obstacles, setObstacles] = useState([])
+  const [particles, setParticles] = useState([])
   const [groundOffset, setGroundOffset] = useState(0)
   const [cityOffset, setCityOffset] = useState(0)
   const [cloudsOffset, setCloudsOffset] = useState(0)
   const [isStarted, setIsStarted] = useState(false)
+  const [isAI, setIsAI] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
+  const hoverStartTime = useRef(0)
+  const [lastVisitedSection, setLastVisitedSection] = useState(null)
 
   const [sections, setSections] = useState([
     { id: "about", title: "About", x: 800, y: 150, icon: "👤" },
@@ -49,9 +55,14 @@ export default function Game({ isPaused, onSectionClick }) {
     setVelocity(0)
     setGameSpeed(3)
     setObstacles([])
+    setParticles([])
     setScore(0)
     setGameOver(false)
     setIsStarted(false)
+    setIsAI(false)
+    setIsHovering(false)
+    hoverStartTime.current = 0
+    setLastVisitedSection(null)
     hasPlayedHitSound.current = false
     setSections([
       { id: "about", title: "About", x: 800, y: 150, icon: "👤" },
@@ -106,6 +117,38 @@ export default function Game({ isPaused, onSectionClick }) {
     if (isPaused || gameOver || !isStarted) return
 
     const gameLoop = setInterval(() => {
+      // AI Presentation Logic
+      if (isAI && !isHovering) {
+        // Pause at sections (when they are just entering the "view" near the bird)
+        const targetSection = sections.find(s => s.x > 150 && s.x < 160);
+        if (targetSection && targetSection.id !== lastVisitedSection) {
+          setIsHovering(true);
+          hoverStartTime.current = Date.now();
+          setLastVisitedSection(targetSection.id);
+
+          // Auto-open modal after a short delay
+          setTimeout(() => {
+            onSectionClick(targetSection.id);
+          }, 500);
+        }
+      }
+
+      if (isHovering) {
+        const elapsed = Date.now() - hoverStartTime.current;
+        // Bobbing effect
+        setBirdPosition(prev => ({
+          ...prev,
+          y: 250 + Math.sin(elapsed / 300) * 20
+        }));
+        setVelocity(0);
+
+        // Resume after 3 seconds
+        if (elapsed > 3000) {
+          setIsHovering(false);
+        }
+        return; // Skip physics
+      }
+
       // Apply gravity
       setVelocity((prev) => Math.min(prev + 0.5, 12))
 
@@ -150,10 +193,27 @@ export default function Game({ isPaused, onSectionClick }) {
           },
         ])
       }
+
+      // AI Logic (Only if not hovering)
+      if (isAI) {
+        const nextObstacle = obstacles.find(o => o.x + 80 > 150);
+
+        if (nextObstacle) {
+          const gapCenter = nextObstacle.gapPosition + 100;
+          if (birdPosition.y > gapCenter + 10 && velocity > -2) {
+            jump();
+          }
+        } else {
+          if (birdPosition.y > 300) {
+            jump();
+          }
+        }
+      }
+
     }, 1000 / 60)
 
     return () => clearInterval(gameLoop)
-  }, [isPaused, gameOver, isStarted, velocity, obstacles, gameSpeed, setBirdPosition, setVelocity])
+  }, [isPaused, gameOver, isStarted, velocity, obstacles, gameSpeed, setBirdPosition, setVelocity, isAI, isHovering, sections, lastVisitedSection, jump])
 
   // Collision detection and scoring
   useEffect(() => {
@@ -203,9 +263,27 @@ export default function Game({ isPaused, onSectionClick }) {
         if ((score + 1) % 5 === 0) {
           setGameSpeed((prev) => Math.min(prev + 0.3, 8))
         }
+
+        // Spawn particles
+        const newParticles = Array.from({ length: 12 }).map((_, i) => ({
+          id: Date.now() + i + Math.random(),
+          x: birdPosition.x,
+          y: birdPosition.y + 20, // Center of bird roughly
+          color: ['#FFD700', '#FFF', '#FF5722', '#4CAF50'][Math.floor(Math.random() * 4)]
+        }))
+        setParticles(prev => [...prev, ...newParticles])
       }
     }
   }, [birdPosition, obstacles, gameOver, isStarted, score, setGameOver, setScore, setGameSpeed, sound])
+
+  // Cleanup particles
+  useEffect(() => {
+    if (particles.length === 0) return
+    const timer = setInterval(() => {
+      setParticles(prev => prev.filter(p => Date.now() - p.id < 1000)) // Remove after 1s
+    }, 500)
+    return () => clearInterval(timer)
+  }, [particles.length])
 
   // Handle section click
   const handleSectionClick = (sectionId, e) => {
@@ -410,6 +488,11 @@ export default function Game({ isPaused, onSectionClick }) {
         />
       ))}
 
+      {/* Particles */}
+      {particles.map((p) => (
+        <Particle key={p.id} x={p.x} y={p.y} color={p.color} />
+      ))}
+
       {/* Retro score display */}
       <div
         className="no-jump"
@@ -457,6 +540,10 @@ export default function Game({ isPaused, onSectionClick }) {
               padding: "30px 50px",
               boxShadow: "0 8px 0 #5D4E37",
               imageRendering: "pixelated",
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              alignItems: "center"
             }}
           >
             <h1
@@ -464,7 +551,7 @@ export default function Game({ isPaused, onSectionClick }) {
                 fontSize: "24px",
                 fontFamily: "'Press Start 2P', 'Courier New', monospace",
                 color: "#543E14",
-                marginBottom: "20px",
+                marginBottom: "10px",
                 textShadow: "2px 2px 0 #FFF",
                 lineHeight: 1.5,
               }}
@@ -478,7 +565,7 @@ export default function Game({ isPaused, onSectionClick }) {
                 fontSize: "12px",
                 fontFamily: "'Press Start 2P', 'Courier New', monospace",
                 color: "#8B4513",
-                marginBottom: "20px",
+                marginBottom: "10px",
                 lineHeight: 1.8,
               }}
             >
@@ -486,15 +573,48 @@ export default function Game({ isPaused, onSectionClick }) {
               <br />
               SPACE TO FLY
             </p>
-            <div
-              style={{
-                fontSize: "10px",
-                fontFamily: "'Press Start 2P', 'Courier New', monospace",
-                color: "#666",
-                animation: "blink 1s infinite",
-              }}
-            >
-              CLICK TO START
+
+            <div style={{ display: 'flex', gap: '20px' }}>
+              <button
+                className="no-jump"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsAI(false);
+                  jump(); // Starts the game
+                }}
+                style={{
+                  padding: "10px 20px",
+                  fontSize: "12px",
+                  fontFamily: "'Press Start 2P', 'Courier New', monospace",
+                  backgroundColor: "#73BF2E",
+                  color: "white",
+                  border: "4px solid #558B2F",
+                  cursor: "pointer",
+                  textShadow: "1px 1px 0 #2E5A1C",
+                }}
+              >
+                PLAY
+              </button>
+              <button
+                className="no-jump"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsAI(true);
+                  setIsStarted(true); // Start immediately
+                }}
+                style={{
+                  padding: "10px 20px",
+                  fontSize: "12px",
+                  fontFamily: "'Press Start 2P', 'Courier New', monospace",
+                  backgroundColor: "#4EC0CA",
+                  color: "white",
+                  border: "4px solid #2980B9",
+                  cursor: "pointer",
+                  textShadow: "1px 1px 0 #2980B9",
+                }}
+              >
+                WATCH (AI)
+              </button>
             </div>
           </div>
         </div>

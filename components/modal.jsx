@@ -147,10 +147,10 @@ function SkillBadge({ skill, color = "#73BF2E" }) {
 }
 
 function AboutContent() {
-  const languages = ["JavaScript", "TypeScript", "Python", "HTML", "CSS", "SASS"]
-  const frameworks = ["React", "Next.js", "React Native", "Django", "Node.js", "Tailwind CSS"]
-  const tools = ["VS Code", "Cursor", "Git", "GitHub", "Figma", "Vercel", "Claude Code"]
-  const databases = ["PostgreSQL", "MySQL", "MongoDB", "Firebase"]
+  const languages = ["JavaScript", "TypeScript", "Python", "HTML", "CSS", "SASS", "SQL"]
+  const frameworks = ["React", "Next.js", "React Native", "Node.js", "Django", "Tailwind CSS", "Angular"]
+  const tools = ["VS Code", "Git", "GitHub Actions", "Docker", "AWS", "Figma", "Vercel", "Jest", "Selenium", "Agile Methodologies", "MarTech", "Google Analytics"]
+  const databases = ["PostgreSQL", "MySQL", "MongoDB", "Firebase", "Redis"]
 
   return (
     <div style={{ fontFamily: "'Press Start 2P', monospace" }}>
@@ -237,11 +237,25 @@ function AboutContent() {
 function ExperienceContent() {
   const experiences = [
     {
+      title: "Full Stack Software Developer",
+      company: "Quad Theory Ltd & Others",
+      period: "2024 - Present",
+      description: "Developing full-stack web apps with React, Node.js, and TypeScript. Building WCAG-compliant e-commerce solutions, payment gateways, and MarTech integrations (Google Analytics, Tag Manager).",
+      icon: "💻",
+    },
+    {
+      title: "Full Stack Developer",
+      company: "TS360 Test Automation",
+      period: "2022 - 2024",
+      description: "Built Chrome extensions and automation frameworks using Node.js, React, and Selenium. Integrated CI/CD pipelines with GitHub Actions.",
+      icon: "⚙️",
+    },
+    {
       title: "Software Developer",
-      company: "Freelance & Personal Projects",
-      period: "2023 - Present",
-      description: "Building web applications using React, Next.js, and modern JavaScript. Working on AI-assisted development projects.",
-      icon: "💼",
+      company: "EON GROUP of Industries",
+      period: "2019 - 2021",
+      description: "Built HR management systems used by 1000+ employees. Developed e-commerce modules with secure payment integration and real-time syncing.",
+      icon: "🏢",
     },
     {
       title: "Content Creator",
@@ -249,20 +263,6 @@ function ExperienceContent() {
       period: "2021 - Present",
       description: "Creating developer tutorials, VS Code tips & themes, CSS tricks, and coding content. Growing dev community.",
       icon: "🎬",
-    },
-    {
-      title: "Open Source Contributor",
-      company: "GitHub - Pinky057",
-      period: "Ongoing",
-      description: "Contributing to open source projects, building public repos, and sharing code with the community.",
-      icon: "🐙",
-    },
-    {
-      title: "CS Graduate",
-      company: "East West University",
-      period: "Completed",
-      description: "Bachelor's in Computer Science with focus on software development, algorithms, and web technologies.",
-      icon: "🎓",
     },
   ]
 
