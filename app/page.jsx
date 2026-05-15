@@ -68,6 +68,17 @@ export default function Home() {
         {/* Game Canvas (Bigger width) */}
         <section className="w-full flex justify-center pt-[450px] sm:pt-[500px] md:pt-[600px] lg:pt-[700px] relative z-20 mt-12">
           <div className="relative w-[95%] md:w-[90%] lg:w-[85%] max-w-[1400px]">
+            
+            {/* Fallen Leaves Background (Behind everything in this section) */}
+            <div className="absolute top-[-180px] bottom-[-100px] left-[-10%] right-[-10%] pointer-events-none z-10 opacity-80">
+              <Image 
+                src="/fallenleafes.png" 
+                alt="Fallen Leaves Background" 
+                fill 
+                className="object-contain object-center drop-shadow-sm"
+              />
+            </div>
+
             {/* Chibi Watching Game */}
             <div className="absolute -top-[120px] md:-top-[200px] left-1/2 -translate-x-1/2 w-[350px] md:w-[500px] z-30 pointer-events-none">
               <Image 
@@ -80,7 +91,7 @@ export default function Home() {
             </div>
 
             {/* Game Container */}
-            <div className="w-full h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden border-[6px] border-[#e9edc9] shadow-xl relative bg-[#f8f9fa]">
+            <div className="w-full h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden border-[6px] border-[#e9edc9] shadow-xl relative z-20 bg-[#f8f9fa]">
               <Game isPaused={isPaused} onSectionClick={openSection} />
             </div>
           </div>
@@ -104,17 +115,27 @@ export default function Home() {
               {/* About Me Section (With Hello Image & Growing Dialog) */}
               <div id="about" className="relative flex flex-col lg:flex-row items-center gap-6 lg:gap-8 -ml-4 md:-ml-12 group w-full pt-16 mt-[-4rem]">
                 
+                {/* Massive Fallen Leaves background matching game canvas size, anchored left */}
+                <div className="absolute top-[-180px] bottom-[-100px] left-0 w-[115%] pointer-events-none z-10 opacity-85 transition-transform duration-700 group-hover:scale-[1.02]">
+                  <Image 
+                    src="/fallenleafes.png" 
+                    alt="Fallen Leaves Big" 
+                    fill 
+                    className="object-contain object-left"
+                  />
+                </div>
+
                 {/* 3D Pop-Out Avatar Portal (Left) */}
                 <div className="w-72 h-72 md:w-[350px] md:h-[350px] xl:w-[400px] xl:h-[400px] flex-shrink-0 relative z-20 flex items-center justify-center">
-                  
+
                   {/* Background Circle Portal (Smaller & Centered behind the image) */}
-                  <div className="absolute w-[78%] h-[78%] rounded-full bg-[#e9f5e9] border-[8px] border-[#84a98c] shadow-[0_10px_25px_rgba(0,0,0,0.05)] overflow-hidden z-0 transition-transform duration-500 group-hover:scale-95">
+                  <div className="absolute w-[78%] h-[78%] rounded-full bg-[#e9f5e9] border-[8px] border-[#84a98c] shadow-[0_10px_25px_rgba(0,0,0,0.05)] overflow-hidden z-10 transition-transform duration-500 group-hover:scale-95">
                     {/* Backdrop Studio Glow */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-[#84a98c]/30 via-[#cad2c5]/10 to-transparent pointer-events-none z-0"></div>
                   </div>
                   
                   {/* Foreground Avatar (Bigger, scaled out, and physically overflowing the circle) */}
-                  <div className="w-full h-full relative z-10 transform scale-[1.15] group-hover:scale-[1.22] group-hover:-translate-y-3 transition-all duration-500 ease-out origin-bottom pointer-events-none">
+                  <div className="w-full h-full relative z-20 transform scale-[1.15] group-hover:scale-[1.22] group-hover:-translate-y-3 transition-all duration-500 ease-out origin-bottom pointer-events-none">
                     <Image 
                       src="/hello.png" 
                       alt="Pinky Hello" 
@@ -126,7 +147,7 @@ export default function Home() {
                 </div>
 
                 {/* Growing Dialog Pill Box (Right) */}
-                <div className="relative flex-1 w-full max-w-none">
+                <div className="relative flex-1 w-full max-w-none z-20">
                   {/* The Box */}
                   <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.06)] border-[3px] border-[#84a98c] transform group-hover:scale-[1.02] transition-transform duration-500 origin-left relative">
                     
