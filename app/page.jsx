@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
+import { Leaf } from "lucide-react"
 import Game from "@/components/game"
 import Modal from "@/components/modal"
 import BottomNav from "@/components/bottom-nav"
@@ -103,15 +104,25 @@ export default function Home() {
               {/* About Me Section (With Hello Image & Growing Dialog) */}
               <div id="about" className="relative flex flex-col lg:flex-row items-center gap-6 lg:gap-8 -ml-4 md:-ml-12 group w-full pt-16 mt-[-4rem]">
                 
-                {/* Hello Avatar (Left) */}
-                <div className="w-72 h-72 md:w-[350px] md:h-[350px] xl:w-[500px] xl:h-[500px] flex-shrink-0 relative z-20 transition-transform duration-500 group-hover:scale-105">
-                  <Image 
-                    src="/hello.png" 
-                    alt="Pinky Hello" 
-                    fill 
-                    style={{ objectFit: 'contain' }}
-                    className="drop-shadow-lg"
-                  />
+                {/* 3D Pop-Out Avatar Portal (Left) */}
+                <div className="w-72 h-72 md:w-[350px] md:h-[350px] xl:w-[400px] xl:h-[400px] flex-shrink-0 relative z-20 flex items-center justify-center">
+                  
+                  {/* Background Circle Portal (Smaller & Centered behind the image) */}
+                  <div className="absolute w-[78%] h-[78%] rounded-full bg-[#e9f5e9] border-[8px] border-[#84a98c] shadow-[0_10px_25px_rgba(0,0,0,0.05)] overflow-hidden z-0 transition-transform duration-500 group-hover:scale-95">
+                    {/* Backdrop Studio Glow */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-[#84a98c]/30 via-[#cad2c5]/10 to-transparent pointer-events-none z-0"></div>
+                  </div>
+                  
+                  {/* Foreground Avatar (Bigger, scaled out, and physically overflowing the circle) */}
+                  <div className="w-full h-full relative z-10 transform scale-[1.15] group-hover:scale-[1.22] group-hover:-translate-y-3 transition-all duration-500 ease-out origin-bottom pointer-events-none">
+                    <Image 
+                      src="/hello.png" 
+                      alt="Pinky Hello" 
+                      fill 
+                      style={{ objectFit: 'contain' }}
+                      className="drop-shadow-[0_15px_25px_rgba(0,0,0,0.25)]"
+                    />
+                  </div>
                 </div>
 
                 {/* Growing Dialog Pill Box (Right) */}
@@ -484,6 +495,29 @@ export default function Home() {
         </section>
 
         {activeSection && <Modal section={activeSection} onClose={closeSection} />}
+
+
+
+        {/* Organic Custom Animations & Custom Leaf Cursor Styles */}
+        <style jsx global>{`
+          /* Custom Organic Leaf Cursor globally */
+          html, body, *, [data-cursor] {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%2384a98c' stroke='%232f3e46' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='rotate(-90 12 12)'%3E%3Cpath d='M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.2A7 7 0 0 1 11 20Z'/%3E%3Cpath d='M19 2c-2.26 4.6-4.16 6.07-6.77 8.68'/%3E%3Cpath d='M13.94 14.06a5.34 5.34 0 0 1-3.54-3.54'/%3E%3C/g%3E%3C/svg%3E") 2 5, auto !important;
+          }
+          /* Gold Leaf hover state for actionable elements */
+          a, button, [role="button"], input, select, textarea, summary, .cursor-pointer {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='%23ffbd2e' stroke='%232f3e46' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='rotate(-90 12 12)'%3E%3Cpath d='M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.2A7 7 0 0 1 11 20Z'/%3E%3Cpath d='M19 2c-2.26 4.6-4.16 6.07-6.77 8.68'/%3E%3Cpath d='M13.94 14.06a5.34 5.34 0 0 1-3.54-3.54'/%3E%3C/g%3E%3C/svg%3E") 2 5, pointer !important;
+          }
+
+          @keyframes leafFloatingAnim {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(12deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+          }
+          .animate-leaf-float {
+            animation: leafFloatingAnim 4s ease-in-out infinite;
+          }
+        `}</style>
       </main>
     </GameProvider>
   )
