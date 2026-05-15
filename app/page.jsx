@@ -165,27 +165,198 @@ export default function Home() {
                 </div>
 
               </div>
+            </div>
+          </div>
+        </section>
 
-              {/* Projects Section */}
-              <div id="projects" className="relative max-w-2xl pt-16 mt-[-4rem]">
-                 <div className="bg-[#e9f5e9] rounded-[3rem] rounded-tr-none p-10 shadow-lg border-[3px] border-[#84a98c] relative ml-auto">
-                    <h2 className="text-[#354f52] font-bold text-4xl mb-6 font-serif">My Loot 🎮</h2>
-                    <p className="text-[#52796f] text-lg leading-relaxed mb-8">
-                      Here are the chapters I've written. Games, SaaS, and creative tools.
-                    </p>
-                    <div className="grid grid-cols-2 gap-4">
-                       <div className="bg-white p-6 rounded-3xl shadow-sm border-2 border-[#cad2c5] text-center hover:-translate-y-2 transition-transform cursor-pointer">
-                         <span className="text-4xl mb-2 block">🍉</span>
-                         <span className="font-bold text-[#52796f]">Juicy Merge</span>
+        {/* Full Width Live Projects Canvas */}
+        <section id="projects" className="w-full flex justify-center mt-8 pb-8 relative z-20 pt-16 mt-[-4rem]">
+          <div className="w-[95%] md:w-[90%] lg:w-[85%] max-w-[1400px] bg-[#e9f5e9] rounded-[3rem] p-10 md:p-16 shadow-[0_8px_30px_rgba(0,0,0,0.06)] border-[6px] border-[#84a98c] relative overflow-hidden flex flex-col items-center">
+            
+            {/* Decorative Background Blobs */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#cad2c5] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+            <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-[#e9edc9] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+
+            <div className="text-center max-w-2xl mb-16 relative z-10">
+              <h2 className="text-[#354f52] font-bold text-4xl md:text-5xl mb-6 font-serif">Live Projects & Loot 🎮</h2>
+              <p className="text-[#52796f] text-xl font-medium">
+                A collection of fully deployed web apps, immersive clones, and interactive games. Click any card to embark on the adventure!
+              </p>
+            </div>
+
+            {/* Rich Compact Browser Previews Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full relative z-10">
+              
+              {/* Project 1: Nexus Admin Dashboard */}
+              <a href="https://nexus-dashboard-phi-five.vercel.app/" target="_blank" rel="noreferrer" className="group relative flex flex-col bg-white rounded-3xl border-[4px] border-[#cad2c5] overflow-hidden h-[360px] hover:border-[#84a98c] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                 {/* Browser Dot Header */}
+                 <div className="h-9 bg-[#f1f3f0] border-b-[3px] border-[#cad2c5] flex items-center px-4 gap-2 flex-shrink-0">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                    <div className="ml-3 flex-1 bg-white rounded-md border border-[#cad2c5] text-[10px] text-[#84a98c] px-2 py-0.5 flex items-center truncate font-mono">nexus-dashboard.vercel.app</div>
+                 </div>
+                 {/* Viewport with Scaled Iframe */}
+                 <div className="flex-1 bg-[#0f172a] relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-[300%] h-[300%] scale-[0.333] origin-top-left select-none pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                       <iframe src="https://nexus-dashboard-phi-five.vercel.app/" className="w-full h-full border-0" title="Nexus Preview" loading="lazy" />
+                    </div>
+                    {/* Premium Info Glass Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2f3e46] via-[#2f3e46]/70 to-transparent opacity-95 group-hover:opacity-90 transition-opacity duration-300 flex flex-col justify-end p-6">
+                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                          <span className="inline-block px-3 py-0.5 bg-[#ffbd2e] text-slate-900 text-[9px] font-bold tracking-widest uppercase rounded-full mb-2 shadow-sm">Featured Premium</span>
+                          <h3 className="font-bold text-white text-2xl leading-tight mb-1">Nexus Dashboard ⭐</h3>
+                          <p className="text-slate-300 text-xs font-medium mb-3 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">Next.js 14 dashboard template featuring high-fidelity AI assistant and charting systems.</p>
+                          <div className="flex flex-wrap gap-1.5">
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Next.js 14</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Tailwind</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Framer</span>
+                          </div>
                        </div>
-                       <div className="bg-white p-6 rounded-3xl shadow-sm border-2 border-[#cad2c5] text-center hover:-translate-y-2 transition-transform cursor-pointer">
-                         <span className="text-4xl mb-2 block">🎯</span>
-                         <span className="font-bold text-[#52796f]">Rival Radar</span>
+                    </div>
+                 </div>
+              </a>
+
+              {/* Project 2: Meridian Travel */}
+              <a href="https://meridian-travel-69ym.vercel.app/" target="_blank" rel="noreferrer" className="group relative flex flex-col bg-white rounded-3xl border-[4px] border-[#cad2c5] overflow-hidden h-[360px] hover:border-[#84a98c] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                 <div className="h-9 bg-[#f1f3f0] border-b-[3px] border-[#cad2c5] flex items-center px-4 gap-2 flex-shrink-0">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                    <div className="ml-3 flex-1 bg-white rounded-md border border-[#cad2c5] text-[10px] text-[#84a98c] px-2 py-0.5 flex items-center truncate font-mono">meridian-travel.vercel.app</div>
+                 </div>
+                 <div className="flex-1 bg-white relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-[300%] h-[300%] scale-[0.333] origin-top-left select-none pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                       <iframe src="https://meridian-travel-69ym.vercel.app/" className="w-full h-full border-0" title="Meridian Preview" loading="lazy" />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2f3e46] via-[#2f3e46]/70 to-transparent opacity-95 group-hover:opacity-90 transition-opacity duration-300 flex flex-col justify-end p-6">
+                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                          <h3 className="font-bold text-white text-2xl leading-tight mb-1">Meridian Travel 🌍</h3>
+                          <p className="text-slate-300 text-xs font-medium mb-3 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">High-fidelity travel booking platform with dynamic Leaflet mapping and pricing data.</p>
+                          <div className="flex flex-wrap gap-1.5">
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Leaflet</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Next.js</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Tailwind</span>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </a>
+
+              {/* Project 3: LinkedIn Clone */}
+              <a href="https://linedin-clone.vercel.app/" target="_blank" rel="noreferrer" className="group relative flex flex-col bg-white rounded-3xl border-[4px] border-[#cad2c5] overflow-hidden h-[360px] hover:border-[#84a98c] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                 <div className="h-9 bg-[#f1f3f0] border-b-[3px] border-[#cad2c5] flex items-center px-4 gap-2 flex-shrink-0">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                    <div className="ml-3 flex-1 bg-white rounded-md border border-[#cad2c5] text-[10px] text-[#84a98c] px-2 py-0.5 flex items-center truncate font-mono">linkedin-clone.vercel.app</div>
+                 </div>
+                 <div className="flex-1 bg-[#f3f2ef] relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-[300%] h-[300%] scale-[0.333] origin-top-left select-none pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                       <iframe src="https://linedin-clone.vercel.app/" className="w-full h-full border-0" title="LinkedIn Preview" loading="lazy" />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2f3e46] via-[#2f3e46]/70 to-transparent opacity-95 group-hover:opacity-90 transition-opacity duration-300 flex flex-col justify-end p-6">
+                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                          <h3 className="font-bold text-white text-2xl leading-tight mb-1">LinkedIn Clone 💼</h3>
+                          <p className="text-slate-300 text-xs font-medium mb-3 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">Pixel-perfect LinkedIn UI rebuild featuring interactive feed mechanics and profile layouts.</p>
+                          <div className="flex flex-wrap gap-1.5">
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">React</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Tailwind</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Vercel</span>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </a>
+
+              {/* Project 4: Hulu 2.0 */}
+              <a href="https://hulu-2-0-clone-beta.vercel.app/" target="_blank" rel="noreferrer" className="group relative flex flex-col bg-white rounded-3xl border-[4px] border-[#cad2c5] overflow-hidden h-[360px] hover:border-[#84a98c] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                 <div className="h-9 bg-[#f1f3f0] border-b-[3px] border-[#cad2c5] flex items-center px-4 gap-2 flex-shrink-0">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                    <div className="ml-3 flex-1 bg-white rounded-md border border-[#cad2c5] text-[10px] text-[#84a98c] px-2 py-0.5 flex items-center truncate font-mono">hulu-2-0.vercel.app</div>
+                 </div>
+                 <div className="flex-1 bg-[#06202a] relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-[300%] h-[300%] scale-[0.333] origin-top-left select-none pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                       <iframe src="https://hulu-2-0-clone-beta.vercel.app/" className="w-full h-full border-0" title="Hulu Preview" loading="lazy" />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2f3e46] via-[#2f3e46]/70 to-transparent opacity-95 group-hover:opacity-90 transition-opacity duration-300 flex flex-col justify-end p-6">
+                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                          <h3 className="font-bold text-white text-2xl leading-tight mb-1">Hulu 2.0 Clone 🎬</h3>
+                          <p className="text-slate-300 text-xs font-medium mb-3 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">Next-gen movie platform catalog mirroring modern layouts with live TMDB API integration.</p>
+                          <div className="flex flex-wrap gap-1.5">
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">React</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">TMDB API</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Tailwind</span>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </a>
+
+              {/* Project 5: Button Studio */}
+              <a href="https://css-buttons-three.vercel.app/" target="_blank" rel="noreferrer" className="group relative flex flex-col bg-white rounded-3xl border-[4px] border-[#cad2c5] overflow-hidden h-[360px] hover:border-[#84a98c] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                 <div className="h-9 bg-[#f1f3f0] border-b-[3px] border-[#cad2c5] flex items-center px-4 gap-2 flex-shrink-0">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                    <div className="ml-3 flex-1 bg-white rounded-md border border-[#cad2c5] text-[10px] text-[#84a98c] px-2 py-0.5 flex items-center truncate font-mono">css-buttons-studio.vercel.app</div>
+                 </div>
+                 <div className="flex-1 bg-[#fafafa] relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-[300%] h-[300%] scale-[0.333] origin-top-left select-none pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                       <iframe src="https://css-buttons-three.vercel.app/" className="w-full h-full border-0" title="Buttons Preview" loading="lazy" />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2f3e46] via-[#2f3e46]/70 to-transparent opacity-95 group-hover:opacity-90 transition-opacity duration-300 flex flex-col justify-end p-6">
+                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                          <h3 className="font-bold text-white text-2xl leading-tight mb-1">Button Studio 🎨</h3>
+                          <p className="text-slate-300 text-xs font-medium mb-3 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">A curated visual showcase of creative hover states, micro-interactions, and modern CSS styles.</p>
+                          <div className="flex flex-wrap gap-1.5">
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Vanilla CSS</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Animations</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">HTML5</span>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </a>
+
+              {/* Project 6: Juicy Merge Interactive Card (No Iframe due to gameplay lock) */}
+              <div onClick={() => setActiveSection("projects")} className="group relative flex flex-col bg-white rounded-3xl border-[4px] border-[#cad2c5] overflow-hidden h-[360px] hover:border-[#84a98c] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer">
+                 <div className="h-9 bg-[#f1f3f0] border-b-[3px] border-[#cad2c5] flex items-center px-4 gap-2 flex-shrink-0">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+                    <div className="ml-3 flex-1 bg-white rounded-md border border-[#cad2c5] text-[10px] text-[#84a98c] px-2 py-0.5 flex items-center truncate font-mono">juicy-fruits-merge.arcade</div>
+                 </div>
+                 <div className="flex-1 bg-gradient-to-br from-[#ffe5e5] to-[#fff3e0] flex flex-col items-center justify-center relative overflow-hidden p-6 group-hover:scale-105 transition-transform duration-700">
+                    <div className="text-6xl mb-3 animate-bounce">🍉</div>
+                    <h3 className="font-bold text-[#2f3e46] text-2xl leading-tight mb-1">Juicy Merge 🕹️</h3>
+                    <span className="text-xs font-bold text-[#e76f51] tracking-wider uppercase mb-4">Playable Arcade Suite</span>
+                    
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2f3e46] via-[#2f3e46]/75 to-[#2f3e46]/30 opacity-0 group-hover:opacity-95 transition-opacity duration-300 flex flex-col justify-end p-6">
+                       <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                          <h3 className="font-bold text-white text-2xl leading-tight mb-1">Juicy Fruits Merge</h3>
+                          <p className="text-slate-300 text-xs font-medium mb-3 line-clamp-2">Highly addictive physics arcade puzzle game featured on the global CrazyGames publisher platform.</p>
+                          <div className="flex flex-wrap gap-1.5">
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Physics Engine</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Matter.js</span>
+                             <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full border border-white/10 text-white/80 font-bold">Canvas</span>
+                          </div>
                        </div>
                     </div>
                  </div>
               </div>
 
+            </div>
+          </div>
+        </section>
+
+        {/* Second Scattered Infographic Content Area */}
+        <section className="relative z-10 w-full mt-8 max-w-7xl mx-auto px-6 md:px-12">
+          <div className="relative z-10 flex flex-col md:flex-row gap-12 pt-16">
+            <div className="flex-1 space-y-24 pb-32">         
+              
               {/* Blogs Section */}
               <div id="blogs" className="relative max-w-xl md:ml-24 pt-16 mt-[-4rem]">
                 <div className="bg-[#fff3e3] rounded-[3rem] p-10 shadow-lg border-[3px] border-[#d4a373]">
