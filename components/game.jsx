@@ -299,7 +299,7 @@ export default function Game({ isPaused, onSectionClick }) {
       style={{
         position: "relative",
         width: "100%",
-        height: "100vh",
+        height: "100%",
         overflow: "hidden",
         cursor: isPaused ? "default" : "pointer",
         imageRendering: "pixelated",
