@@ -19,14 +19,23 @@
 }
 
 body {
-  font-family: 'Press Start 2P', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   overflow-x: hidden;
-  image-rendering: pixelated;
-  -webkit-font-smoothing: none;
+  background-color: #eef6ea;
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Pixel rendering belongs to the game only — it was blurring every
+   illustration and killing text antialiasing across the whole site. */
+.game-world,
+.game-world *,
+.pixel-font {
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
